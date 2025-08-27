@@ -26,6 +26,11 @@ public class EmployeesController : Controller
         if (!ModelState.IsValid)
             return View();
 
+        if (employee.Name == "Håkan")
+        {
+            ModelState.AddModelError(nameof(employee.Name), "Håkan är bannlyst");
+        }
+
         employeeService.Add(employee);
 
         return RedirectToAction(nameof(Index));
