@@ -14,6 +14,13 @@ public class EmployeesController : Controller
         return View(model);
     }
 
+    [HttpGet("/employee/{id}")]
+    public IActionResult Details(int id)
+    {
+        var model = employeeService.GetById(id);
+        return View(model);
+    }
+
     [HttpGet("/create")]
     public IActionResult Create()
     {
@@ -23,6 +30,7 @@ public class EmployeesController : Controller
     [HttpPost("/create")]
     public IActionResult Create(Employee employee)
     {
+       
         if (!ModelState.IsValid)
             return View();
 

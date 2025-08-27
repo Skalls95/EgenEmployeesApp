@@ -6,8 +6,8 @@ namespace EmployeesApp.Web.Services
     {
         static List<Employee> Employees = new List<Employee> {
         new Employee{Id = 1, Name = "Jonas", Email = "Jonas@testmail.com"},
-        new Employee{Id = 1, Name = "Bert", Email = "Bert@testmail.com"},
-        new Employee{Id = 1, Name = "Andreas", Email = "Andreas@testmail.com"}
+        new Employee{Id = 2, Name = "Bert", Email = "Bert@testmail.com"},
+        new Employee{Id = 3, Name = "Andreas", Email = "Andreas@testmail.com"}
         };
 
         public void Add(Employee employee)

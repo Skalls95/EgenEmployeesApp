@@ -11,7 +11,7 @@
     <ul>
         @foreach (var item in Model)
         {
-            <li>@item.Name</li>
+            <li><a asp-controller="Employees" asp-action="Details" asp-route-id="@item.Id">@item.Name</a></li>
         }
     </ul>
     <a asp-controller="Employees" asp-action="Create">Create Employee</a>
