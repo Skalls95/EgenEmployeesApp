@@ -1,15 +1,8 @@
-﻿@using EmployeesApp.Web.Models
-@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
-@model Employee
-
-<!DOCTYPE html>
-    <html>
-    <head>
-        <title>Employee details</title>
-    </head>
-    <body>
-        <h1>@Model.Name</h1>
-        <h2>@Model.Id</h2>
-        <h2>@Model.Email</h2>
-    </body>
-    </html>
+﻿@model Employee
+@{
+	ViewBag.Title = $"{Model.Name} Details";
+	ViewBag.Header = $"Details for {Model.Name}";
+}
+<p>Employee ID: @Model.Id</p>
+<p>Employee name: @Model.Name</p>
+<p>Employee email: @Model.Email</p>

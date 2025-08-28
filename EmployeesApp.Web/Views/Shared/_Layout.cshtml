@@ -1,0 +1,23 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+	<title>@ViewBag.Title</title>
+	<link rel="stylesheet" href="https://unpkg.com/@@picocss/pico@@latest/css/pico.classless.min.css">
+</head>
+<body>
+	<header>
+		<nav style="display: flex; justify-content: flex-start; gap: 1rem;">
+			<a asp-controller="Employees" asp-action="Index">Home</a>
+			<a asp-controller="Employees" asp-action="Create">Add Employee</a>
+		</nav>
+	</header>
+	<h1>@ViewBag.Header</h1>
+
+	<div>
+		@RenderBody()
+	</div>
+	<hr />
+	<footer>©Grupp3 Employees</footer>
+</body>
+</html>
