@@ -34,7 +34,7 @@ public class EmployeesController : Controller
         if (!ModelState.IsValid)
             return View();
 
-        employeeService.Add(employee);
+        employeeService.RegisterNew(employee);
 
         return RedirectToAction(nameof(Index));
     }

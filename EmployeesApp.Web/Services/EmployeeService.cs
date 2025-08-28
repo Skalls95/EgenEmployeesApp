@@ -10,7 +10,7 @@ namespace EmployeesApp.Web.Services
         new Employee{Id = 3, Name = "Andreas", Email = "Andreas@testmail.com"}
         };
 
-        public void Add(Employee employee)
+        public void RegisterNew(Employee employee)
         {
             employee.Id = _employees.Count > 0 ? _employees.Max(p => p.Id) + 1 : 1;
 
