@@ -6,15 +6,10 @@
 }
 
 <form asp-controller="Employees" asp-action="Create">
-	<label asp-for="Name"></label>
-	<input asp-for="Name" />
-	<span asp-validation-for="Name"></span>
-
-	<label asp-for="Email"></label>
-	<input asp-for="Email" />
-	<span asp-validation-for="Email"></span>
-
+	<partial name="_EmployeeFormInput" for="Name"></partial>
+	<partial name="_EmployeeFormInput" for="Email"></partial>
 	<input type="submit" name="submit" value="Submit" />
+
 </form>
 @section scripts
 {
