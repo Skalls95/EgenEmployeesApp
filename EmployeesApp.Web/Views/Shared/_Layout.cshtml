@@ -11,13 +11,16 @@
 			<a asp-controller="Employees" asp-action="Index">Home</a>
 			<a asp-controller="Employees" asp-action="Create">Add Employee</a>
 		</nav>
+		<partial name="_TimeBox" />
 	</header>
 	<h1>@ViewBag.Header</h1>
 
 	<div>
 		@RenderBody()
 	</div>
+	<partial name="_TimeBox" />
 	<hr />
 	<footer>©Grupp3 Employees</footer>
+	@RenderSection("scripts", false);
 </body>
 </html>
