@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace EmployeesApp.Web.Models
+namespace EmployeesApp.Web.Attributes
 {
     public class NoDigitsAttribute() : ValidationAttribute
     {
@@ -8,8 +8,8 @@ namespace EmployeesApp.Web.Models
         {
             if (value == null) return true;
 
-            return (value is string s 
-                && !s.Any(c => char.IsAsciiDigit(c)));
+            return value is string s 
+                && !s.Any(c => char.IsAsciiDigit(c));
         }
     }
 }
