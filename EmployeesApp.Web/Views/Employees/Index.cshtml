@@ -1,8 +1,31 @@
 ﻿@model Employee[]
 
+@{
+    ViewBag.Title = "Start";
+}
+
+@if (TempData["Message"] != null)
+{
+    <h2 id="tempMessage" style="color:green">@TempData["Message"]</h2>
+}
+
 <ul>
     @foreach (var item in Model)
     {
         <li><a asp-controller="Employees" asp-action="Details" asp-route-id="@item.Id">@item.Name</a></li>
     }
 </ul>
+
+
+@section scripts
+{
+    <script>
+        const message = document.getElementById("tempMessage");
+
+                if (message) {
+            setTimeout(() => {
+                message.style.display = "none";
+            }, 10000);
+        }
+    </script>
+}

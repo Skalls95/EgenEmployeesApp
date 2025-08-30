@@ -1,5 +1,13 @@
 ﻿@model Employee[]
 
+@{
+    ViewBag.Title = "Stämplingsklocka";
+}
+
+@if (TempData["Error"] != null)
+{
+    <h2 id="tempError" style="color:red">@TempData["Error"]</h2>
+}
 
 <div>
     <form asp-controller="Employees" asp-action="Clock" method="post">
@@ -14,8 +22,26 @@
     <ul>
         @foreach (var e in Model)
         {
-            
+            <li>
+                ID: @e.Id
+                @e.Name -
+                Instämplad: @e.Stamps?.LastOrDefault()?.Start?.ToShortTimeString()
+                <button type="submit">Stämpla ut</button>
+            </li>
         }
     </ul>
 </details>
+
+@section scripts 
+{
+    <script>
+        const error = document.getElementById("tempError");
+
+                if (error) {
+            setTimeout(() => {
+                error.style.display = "none";
+            }, 10000);
+        }
+    </script>
+}
 

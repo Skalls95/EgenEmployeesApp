@@ -42,10 +42,9 @@ public class EmployeesController : Controller
     [HttpGet("stamp")]
     public IActionResult Clock()
     {
-        // Gör en box där jag kan skriva in id på den som ska stämplas ut/in
-        // Visa alla personer via en dropdown, om de är instämplade så ska de ha en knapp för att stämpla ut och reverse.
-
-        Employee[] model = employeeService.GetAll();
+        Employee[] model = employeeService.GetAll()
+            .Where(e => e.OnWork == true)
+            .ToArray();
 
         return View(model);
     }
@@ -53,11 +52,25 @@ public class EmployeesController : Controller
     [HttpPost("stamp")]
     public IActionResult Clock(int id)
     {
-        // skicka tillbaka personen om id ej hittades
+        Employee? employee = employeeService.GetById(id);
+        if (employee == null)
+        {
+            TempData["Error"] = $"Ingen anställd med Id {id} hittades!";
+            return RedirectToAction(nameof(Clock));
+        }
 
-        // Om man lyckas stämpla ut/in, skicka till start om man lyckas med konfirmation.
+        bool startedWork = employeeService.OnWork(employee);
 
-        // Ta id på personen som vill stämpla in/ut och spara tiden som de stämplade
+        if (startedWork)
+            TempData["Message"] = $"{employee.Name} stämplades in.";
+        else
+            TempData["Message"] = $"{employee.Name} stämplades ut.";
+
+        return RedirectToAction(nameof(Index));
+    }
+
+    public IActionResult Payroll()
+    {
         return View();
     }
 

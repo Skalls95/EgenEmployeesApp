@@ -23,9 +23,9 @@ namespace EmployeesApp.Web.Services
             return _employees.ToArray();
         }
 
-        public Employee GetById(int id)
+        public Employee? GetById(int id)
         {
-            Employee employee = _employees.Single(e => e.Id == id);
+            Employee? employee = _employees.SingleOrDefault(e => e.Id == id);
             return employee;
         }
 
