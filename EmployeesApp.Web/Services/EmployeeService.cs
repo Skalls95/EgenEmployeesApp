@@ -29,5 +29,24 @@ namespace EmployeesApp.Web.Services
             return employee;
         }
 
+        public bool OnWork(Employee employee)
+        {
+            if (!employee.OnWork)
+            {
+                employee.Stamps.Add(new StampTime() { Start =  DateTime.Now });
+                employee.OnWork = true;
+                return true;
+            }
+            else
+            {
+                employee.Stamps.Last().End = DateTime.Now;
+                employee.OnWork = false;
+                return false;
+            }
+
+            // return true om man stämplar in, retrun false, om man stämplar ut
+
+        }
+
     }
 }

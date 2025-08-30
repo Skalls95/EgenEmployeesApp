@@ -1,15 +1,40 @@
-﻿@using EmployeesApp.Web.Models
-@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
-@model Employee
+﻿@model Employee
 
-<!DOCTYPE html>
-    <html>
-    <head>
-        <title>Employee details</title>
-    </head>
-    <body>
-        <h1>@Model.Name</h1>
-        <h2>@Model.Id</h2>
-        <h2>@Model.Email</h2>
-    </body>
-    </html>
+@{
+    ViewBag.Title = "Arbetare: " + @Model.Name;
+}
+
+<h1>@Model.Name</h1>
+<h2>Id: @Model.Id</h2>
+<h2>E-mail: @Model.Email</h2>
+
+@if (Model.Stamps.Count > 0)
+{
+    <h1>Stämplingar</h1>
+    <table>
+        <tr>
+            <th>In/Ut</th>
+            <th>Dag</th>
+            <th>Tid</th>
+        </tr>
+        @foreach (var item in Model.Stamps)
+        {
+            @if (item.Start.HasValue)
+            {
+                <tr>
+                    <td>In</td>
+                    <td>@item.Start.Value.ToShortDateString()</td>
+                    <td>@item.Start.Value.ToShortTimeString()</td>
+                </tr>
+                @if (item.End.HasValue)
+                {
+                    <tr>
+                        <td>Ut</td>
+                        <td>@item.End.Value.ToShortDateString()</td>
+                        <td>@item.End.Value.ToShortTimeString()</td>
+                    </tr>
+                }
+            }
+        }
+    </table>
+}

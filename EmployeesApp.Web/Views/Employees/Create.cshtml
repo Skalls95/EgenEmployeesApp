@@ -1,13 +1,10 @@
 ﻿@using EmployeesApp.Web.Models
-@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 @model Employee
-<!DOCTYPE html>
-    <html>
-    <head>
-        <title>Create employee</title>
-    <link rel="stylesheet" href="https://unpkg.com/@@picocss/pico@@latest/css/pico.classless.min.css">
-    </head>
-    <body>
+
+@{
+    ViewBag.Title = "Skapa arbetare";
+}
+
     <form asp-controller="Employees" asp-action="Create">
         <label asp-for="Name"></label>
         <input asp-for="Name" />
@@ -19,6 +16,11 @@
 
         <input type="submit" name="submit" value="Submit" />
     </form>
-    </body>
-    </html>
+
+    @section scripts 
+    {
+        <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.7.1.min.js"></script>
+        <script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.19.2/jquery.validate.min.js"></script>
+        <script src="https://ajax.aspnetcdn.com/ajax/mvc/5.2.3/jquery.validate.unobtrusive.min.js"></script>
+    }
 

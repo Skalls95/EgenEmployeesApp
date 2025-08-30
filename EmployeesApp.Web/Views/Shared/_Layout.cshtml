@@ -1,13 +1,41 @@
-﻿<!DOCTYPE html>
+﻿@{
+    //Kod för scripts, översta är obligatoriskt, de andra två är för validering av forms
+
+    // <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.7.1.min.js"></script>
+    // <script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.19.2/jquery.validate.min.js"></script>
+    // <script src="https://ajax.aspnetcdn.com/ajax/mvc/5.2.3/jquery.validate.unobtrusive.min.js"></script>
+}
+
+<!DOCTYPE html>
 
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
+    <link rel="stylesheet" href="https://unpkg.com/@@picocss/pico@@latest/css/pico.classless.min.css">
     <title>@ViewBag.Title</title>
 </head>
 <body>
-    <div>
-        @RenderBody()
-    </div>
+    <header>
+        <nav style="max-width: 80%; padding: 0, 2rem, 0, 2rem;">
+            <ul>
+                <li><a asp-controller="Employees" asp-action="">Start</a> </li>
+            </ul>
+            <ul>
+                <li><a asp-controller="Employees" asp-action="Create">Skapa arbetare</a></li>
+            </ul>
+            <ul>
+                <li><partial name="_TimeBox" /></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <div>
+            @RenderBody()
+        </div>
+    </main>
+    <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.7.1.min.js"></script>
+    @RenderSection("Scripts", required: false)
 </body>
 </html>
+
+
