@@ -25,7 +25,7 @@
             <li>
                 ID: @e.Id
                 @e.Name -
-                Instämplad: @e.Stamps?.LastOrDefault()?.Start?.ToShortTimeString()
+                Instämplad: @e.Stamps.LastOrDefault()?.Start.ToShortTimeString()
                 <button type="submit">Stämpla ut</button>
             </li>
         }

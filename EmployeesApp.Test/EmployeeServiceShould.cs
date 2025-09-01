@@ -10,7 +10,6 @@ public class EmployeeServiceShould
     public void Add_ShouldIncreaseCount_AndAssignId()
     {
         EmployeeService sut = new EmployeeService();
-        sut.Employees.Clear();
 
         int beforeAddingCount = sut.Employees.Count;
         int previousMaxId = sut.Employees.Max(e => e.Id);
@@ -19,7 +18,7 @@ public class EmployeeServiceShould
         sut.Add(newEmployee);
 
         Assert.Contains(newEmployee, sut.Employees);
-        Assert.Equal(beforeAddingCount +1, sut.Employees.Count);
+        Assert.Equal(beforeAddingCount + 1, sut.Employees.Count);
         Assert.Equal(previousMaxId + 1, sut.Employees.Max(e => e.Id));
     }
 
@@ -36,7 +35,7 @@ public class EmployeeServiceShould
     }
 
     [Fact]
-    public void GetById_ShouldRetrunCorrectEmployee_WhenEmployeeExists()
+    public void GetById_ShouldReturnCorrectEmployee_WhenEmployeeExists()
     {
         EmployeeService sut = new EmployeeService();
         sut.Employees.Clear();
@@ -100,7 +99,7 @@ public class EmployeeServiceShould
         Assert.Equal(previousStampsCount + 1, newEmployee.Stamps.Count);
         Assert.True(isClockedIn);
         Assert.True(newEmployee.OnWork);
-        Assert.NotNull(newEmployee.Stamps[0].Start);
+        Assert.NotEqual(default(DateTime), newEmployee.Stamps[0].Start);
         Assert.Null(newEmployee.Stamps[0].End);
     }
 
@@ -138,7 +137,7 @@ public class EmployeeServiceShould
 
         var stamp = newEmployee.Stamps[0];
 
-        Assert.InRange(stamp.Start!.Value, beforeClockIn, afterClockIn);
+        Assert.InRange(stamp.Start, beforeClockIn, afterClockIn);
         Assert.InRange(stamp.End!.Value, beforeClockOut, afterClockOut);
     }
 }

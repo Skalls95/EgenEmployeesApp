@@ -4,11 +4,13 @@ namespace EmployeesApp.Web.Services
 {
     public class EmployeeService
     {
-        public List<Employee> Employees = new List<Employee> {
-        new Employee{Id = 1, Name = "Jonas", Email = "Jonas@testmail.com"},
-        new Employee{Id = 2, Name = "Bert", Email = "Bert@testmail.com"},
-        new Employee{Id = 3, Name = "Andreas", Email = "Andreas@testmail.com"}
-        };
+        //public List<Employee> Employees = new List<Employee> {
+        //new Employee{Id = 1, Name = "Jonas", Email = "Jonas@testmail.com"},
+        //new Employee{Id = 2, Name = "Bert", Email = "Bert@testmail.com"},
+        //new Employee{Id = 3, Name = "Andreas", Email = "Andreas@testmail.com"}
+        //};
+
+        public List<Employee> Employees = TestDataService.GetEmployees();
 
         public void Add(Employee employee)
         {
@@ -44,7 +46,6 @@ namespace EmployeesApp.Web.Services
                 return false;
             }
 
-            // return true om man stämplar in, retrun false, om man stämplar ut
 
         }
 

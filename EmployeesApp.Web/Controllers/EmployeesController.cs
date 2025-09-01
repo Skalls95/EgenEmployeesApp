@@ -8,7 +8,7 @@ public class EmployeesController : Controller
 {
     static EmployeeService _employeeService = new EmployeeService();
 
-    [Route("")]
+    [Route("/")]
     public IActionResult Index()
     {
         Employee[] model = _employeeService.GetAll();
@@ -82,10 +82,10 @@ public class EmployeesController : Controller
                 HourlyWage = e.HourlyWage,
                 TotalHours = e.Stamps
                     .Where(s => s.End.HasValue)
-                    .Sum(s => (s.End!.Value - s.Start!.Value).TotalHours),
+                    .Sum(s => (s.End!.Value - s.Start).TotalHours),
                 TotalSalary = (decimal)e.Stamps
                     .Where(s => s.End.HasValue)
-                    .Sum(s => (s.End!.Value - s.Start!.Value).TotalHours) * e.HourlyWage
+                    .Sum(s => (s.End!.Value - s.Start).TotalHours) * e.HourlyWage
             }).ToArray();
 
         return View(viewModel);

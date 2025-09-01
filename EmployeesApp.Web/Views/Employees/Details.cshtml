@@ -4,12 +4,11 @@
     ViewBag.Title = "Arbetare: " + @Model.Name;
 }
 
-<h1>@Model.Name</h1>
-<h2>Id: @Model.Id</h2>
-<h2>E-mail: @Model.Email</h2>
-<h2>@Model.HourlyWage kr/t</h2>
+<p>Id: @Model.Id</p>
+<p>E-mail: @Model.Email</p>
+<p>Timlön: @Model.HourlyWage kr</p>
 
-<h1>Stämplingar</h1>
+<h3>Stämplingar</h3>
 @if (Model.Stamps.Count > 0)
 {
     double totalHours = 0;
@@ -21,12 +20,10 @@
         </tr>
         @foreach (var item in Model.Stamps)
         {
-            @if (item.Start.HasValue)
-            {
                 <tr>
                     <td>In</td>
-                    <td>@item.Start.Value.ToShortDateString()</td>
-                    <td>@item.Start.Value.ToShortTimeString()</td>
+                    <td>@item.Start.ToShortDateString()</td>
+                    <td>@item.Start.ToShortTimeString()</td>
                 </tr>
                 @if (item.End.HasValue)
                 {
@@ -36,9 +33,8 @@
                         <td>@item.End.Value.ToShortTimeString()</td>
                     </tr>
 
-                    totalHours += (item.End.Value - item.Start.Value).TotalHours;
+                    totalHours += (item.End.Value - item.Start).TotalHours;
                 }
-            }
         }
     </table>
 

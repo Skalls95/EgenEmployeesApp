@@ -10,6 +10,7 @@
         <th>Id</th>
         <th>Namn</th>
         <th>Arbetade timmar</th>
+        <th>Timlön</th>
         <th>Lön</th>
     </tr>
     @foreach (var item in Model)
@@ -18,6 +19,7 @@
             <td>@item.EmployeeId</td>
             <td>@item.Name</td>
             <td>@item.TotalHours.ToString("F2")</td>
+            <td>@item.HourlyWage kr</td>
             <td>@item.TotalSalary.ToString("F2") kr</td>
         </tr>
     }
