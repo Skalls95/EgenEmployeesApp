@@ -10,7 +10,7 @@
 }
 
 <div>
-    <form asp-controller="Employees" asp-action="Clock" method="post">
+    <form asp-controller="Employees" asp-action="Clock" method="get">
         <label for="id">Id:</label>
         <input type="number" id="id" name="id" />
         <button type="submit">Stämpla</button>
@@ -26,7 +26,7 @@
                 ID: @e.Id
                 @e.Name -
                 Instämplad: @e.Stamps.LastOrDefault()?.Start.ToShortTimeString()
-                <button type="submit">Stämpla ut</button>
+                <a asp-controller="Employees" asp-action="Clock" asp-route-id="@(e.Id)">Stämpla ut</a> 
             </li>
         }
     </ul>

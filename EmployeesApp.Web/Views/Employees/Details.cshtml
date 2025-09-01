@@ -8,6 +8,20 @@
 <p>E-mail: @Model.Email</p>
 <p>Timlön: @Model.HourlyWage kr</p>
 
+<div>
+@if (Model.OnWork)
+{
+    <h3>Stämpla ut</h3>
+}
+else
+{
+    <h3>Stämpla in</h3>
+}
+<div>
+    <partial name="_QRCode" model="@(Model.Id)" />
+</div>
+</div>
+
 <h3>Stämplingar</h3>
 @if (Model.Stamps.Count > 0)
 {

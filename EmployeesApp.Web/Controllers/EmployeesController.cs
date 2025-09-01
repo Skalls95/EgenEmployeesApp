@@ -40,7 +40,7 @@ public class EmployeesController : Controller
         return RedirectToAction(nameof(Index));
     }
 
-    [HttpGet("/timeclock")]
+    [HttpGet("/punchclock")]
     public IActionResult Clock()
     {
         Employee[] model = _employeeService.GetAll()
@@ -50,7 +50,7 @@ public class EmployeesController : Controller
         return View(model);
     }
 
-    [HttpPost("/timeclock/{id}")]
+    [HttpGet("/punchclock/{id}")]
     public IActionResult Clock(int id)
     {
         Employee? model = _employeeService.GetById(id);

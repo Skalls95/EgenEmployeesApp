@@ -6,8 +6,14 @@
 
 @if (TempData["Message"] != null)
 {
-    <h2 id="tempMessage" style="color:green">@TempData["Message"]</h2>
+    <h3 id="tempMessage" style="color:green">@TempData["Message"]</h3>
 }
+
+<div>
+    <a asp-controller="Employees" asp-action="Payroll">Admin - Lönerapport</a>
+</div>
+
+<br />
 
 <ul>
     @foreach (var item in Model)
