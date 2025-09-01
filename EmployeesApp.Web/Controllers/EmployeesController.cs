@@ -41,33 +41,31 @@ public class EmployeesController : Controller
     }
 
     [HttpGet("/punchclock")]
-    public IActionResult Clock()
+    public IActionResult Clock(int? id)
     {
-        Employee[] model = _employeeService.GetAll()
+        if (id.HasValue)
+        {
+            Employee? model = _employeeService.GetById(id.Value);
+            if (model == null)
+            {
+                TempData["Error"] = $"Ingen anställd med Id {id} hittades!";
+                return RedirectToAction(nameof(Clock));
+            }
+
+            bool startedWork = _employeeService.OnWork(model);
+
+            TempData["Message"] = startedWork
+                ? $"{model.Name} stämplades in."
+                : $"{model.Name} stämplades ut.";
+
+            return RedirectToAction(nameof(Index));
+        }
+
+        Employee[] modelList = _employeeService.GetAll()
             .Where(e => e.OnWork == true)
             .ToArray();
 
-        return View(model);
-    }
-
-    [HttpGet("/punchclock/{id}")]
-    public IActionResult Clock(int id)
-    {
-        Employee? model = _employeeService.GetById(id);
-        if (model == null)
-        {
-            TempData["Error"] = $"Ingen anställd med Id {id} hittades!";
-            return RedirectToAction(nameof(Clock));
-        }
-
-        bool startedWork = _employeeService.OnWork(model);
-
-        if (startedWork)
-            TempData["Message"] = $"{model.Name} stämplades in.";
-        else
-            TempData["Message"] = $"{model.Name} stämplades ut.";
-
-        return RedirectToAction(nameof(Index));
+        return View(modelList);
     }
 
     [Route("/payroll")]
