@@ -5,19 +5,19 @@ using Microsoft.AspNetCore.Mvc;
 namespace EmployeesApp.Web.Controllers;
 public class EmployeesController : Controller
 {
-    EmployeeService employeeService = new EmployeeService();
+    static EmployeeService _employeeService = new EmployeeService();
 
     [Route("")]
     public IActionResult Index()
     {
-        Employee[] model = employeeService.GetAll();
+        Employee[] model = _employeeService.GetAll();
         return View(model);
     }
 
     [HttpGet("/employee/{id}")]
     public IActionResult Details(int id)
     {
-        var model = employeeService.GetById(id);
+        var model = _employeeService.GetById(id);
         return View(model);
     }
 
@@ -34,7 +34,7 @@ public class EmployeesController : Controller
         if (!ModelState.IsValid)
             return View();
 
-        employeeService.Add(employee);
+        _employeeService.Add(employee);
 
         return RedirectToAction(nameof(Index));
     }
@@ -42,7 +42,7 @@ public class EmployeesController : Controller
     [HttpGet("stamp")]
     public IActionResult Clock()
     {
-        Employee[] model = employeeService.GetAll()
+        Employee[] model = _employeeService.GetAll()
             .Where(e => e.OnWork == true)
             .ToArray();
 
@@ -52,14 +52,14 @@ public class EmployeesController : Controller
     [HttpPost("stamp")]
     public IActionResult Clock(int id)
     {
-        Employee? employee = employeeService.GetById(id);
+        Employee? employee = _employeeService.GetById(id);
         if (employee == null)
         {
             TempData["Error"] = $"Ingen anställd med Id {id} hittades!";
             return RedirectToAction(nameof(Clock));
         }
 
-        bool startedWork = employeeService.OnWork(employee);
+        bool startedWork = _employeeService.OnWork(employee);
 
         if (startedWork)
             TempData["Message"] = $"{employee.Name} stämplades in.";
