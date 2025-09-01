@@ -4,7 +4,7 @@ namespace EmployeesApp.Web.Services
 {
     public class EmployeeService
     {
-        static List<Employee> _employees = new List<Employee> {
+        public static List<Employee> Employees = new List<Employee> {
         new Employee{Id = 1, Name = "Jonas", Email = "Jonas@testmail.com"},
         new Employee{Id = 2, Name = "Bert", Email = "Bert@testmail.com"},
         new Employee{Id = 3, Name = "Andreas", Email = "Andreas@testmail.com"}
@@ -12,20 +12,20 @@ namespace EmployeesApp.Web.Services
 
         public void Add(Employee employee)
         {
-            employee.Id = _employees.Count > 0 ? _employees.Max(p => p.Id) + 1 : 1;
+            employee.Id = Employees.Count > 0 ? Employees.Max(p => p.Id) + 1 : 1;
 
-            _employees.Add(employee);
+            Employees.Add(employee);
 
         }
 
         public Employee[] GetAll()
         {
-            return _employees.ToArray();
+            return Employees.ToArray();
         }
 
         public Employee? GetById(int id)
         {
-            Employee? employee = _employees.SingleOrDefault(e => e.Id == id);
+            Employee? employee = Employees.SingleOrDefault(e => e.Id == id);
             return employee;
         }
 
