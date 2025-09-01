@@ -20,6 +20,8 @@ namespace EmployeesApp.Web.Models
 
         public bool OnWork { get; set; }
 
+        public decimal HourlyWage { get; set; } = 110;
+
         public List<StampTime> Stamps { get; set; } = new List<StampTime>();
     }
 }

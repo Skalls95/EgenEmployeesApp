@@ -1,0 +1,24 @@
+﻿@model PayrollViewModel[]
+@{
+    ViewBag.Title = "Översikt Lönerapport";
+}
+
+
+<h1>Lönerapport</h1>
+<table>
+    <tr>
+        <th>Id</th>
+        <th>Namn</th>
+        <th>Arbetade timmar</th>
+        <th>Lön</th>
+    </tr>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@item.EmployeeId</td>
+            <td>@item.Name</td>
+            <td>@item.TotalHours.ToString("F2")</td>
+            <td>@item.TotalSalary.ToString("F2") kr</td>
+        </tr>
+    }
+</table>

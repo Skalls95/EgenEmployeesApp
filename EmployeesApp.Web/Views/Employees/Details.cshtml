@@ -7,10 +7,12 @@
 <h1>@Model.Name</h1>
 <h2>Id: @Model.Id</h2>
 <h2>E-mail: @Model.Email</h2>
+<h2>@Model.HourlyWage kr/t</h2>
 
+<h1>Stämplingar</h1>
 @if (Model.Stamps.Count > 0)
 {
-    <h1>Stämplingar</h1>
+    double totalHours = 0;
     <table>
         <tr>
             <th>In/Ut</th>
@@ -33,8 +35,15 @@
                         <td>@item.End.Value.ToShortDateString()</td>
                         <td>@item.End.Value.ToShortTimeString()</td>
                     </tr>
+
+                    totalHours += (item.End.Value - item.Start.Value).TotalHours;
                 }
             }
         }
     </table>
+
+    decimal totalSalary = (decimal)totalHours * Model.HourlyWage;
+
+    <p>Totalt arbetad tid: @totalHours.ToString("F2") timmar</p>
+    <p>Total lön: @totalSalary kr</p>
 }

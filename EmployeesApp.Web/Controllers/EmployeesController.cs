@@ -1,5 +1,6 @@
 ﻿using EmployeesApp.Web.Models;
 using EmployeesApp.Web.Services;
+using EmployeesApp.Web.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EmployeesApp.Web.Controllers;
@@ -30,7 +31,7 @@ public class EmployeesController : Controller
     [HttpPost("/create")]
     public IActionResult Create(Employee employee)
     {
-       
+
         if (!ModelState.IsValid)
             return View();
 
@@ -39,7 +40,7 @@ public class EmployeesController : Controller
         return RedirectToAction(nameof(Index));
     }
 
-    [HttpGet("stamp")]
+    [HttpGet("/timeclock")]
     public IActionResult Clock()
     {
         Employee[] model = _employeeService.GetAll()
@@ -49,29 +50,47 @@ public class EmployeesController : Controller
         return View(model);
     }
 
-    [HttpPost("stamp")]
+    [HttpPost("/timeclock/{id}")]
     public IActionResult Clock(int id)
     {
-        Employee? employee = _employeeService.GetById(id);
-        if (employee == null)
+        Employee? model = _employeeService.GetById(id);
+        if (model == null)
         {
             TempData["Error"] = $"Ingen anställd med Id {id} hittades!";
             return RedirectToAction(nameof(Clock));
         }
 
-        bool startedWork = _employeeService.OnWork(employee);
+        bool startedWork = _employeeService.OnWork(model);
 
         if (startedWork)
-            TempData["Message"] = $"{employee.Name} stämplades in.";
+            TempData["Message"] = $"{model.Name} stämplades in.";
         else
-            TempData["Message"] = $"{employee.Name} stämplades ut.";
+            TempData["Message"] = $"{model.Name} stämplades ut.";
 
         return RedirectToAction(nameof(Index));
     }
 
+    [Route("/payroll")]
     public IActionResult Payroll()
     {
-        return View();
+        Employee[] employees = _employeeService.GetAll();
+        PayrollViewModel[] viewModel = employees
+            .Select(e => new PayrollViewModel
+            {
+                EmployeeId = e.Id,
+                Name = e.Name,
+                HourlyWage = e.HourlyWage,
+                TotalHours = e.Stamps
+                    .Where(s => s.End.HasValue)
+                    .Sum(s => (s.End!.Value - s.Start!.Value).TotalHours),
+                TotalSalary = (decimal)e.Stamps
+                    .Where(s => s.End.HasValue)
+                    .Sum(s => (s.End!.Value - s.Start!.Value).TotalHours) * e.HourlyWage
+            }).ToArray();
+
+        return View(viewModel);
     }
+
+
 
 }
