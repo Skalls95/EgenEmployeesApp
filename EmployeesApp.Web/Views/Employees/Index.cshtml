@@ -8,6 +8,10 @@
 {
     <h3 id="tempMessage" style="color:green">@TempData["Message"]</h3>
 }
+@if (TempData["Error"] != null)
+{
+    <h3 id="tempError" style="color:red">@TempData["Error"]</h3>
+}
 
 <div>
     <a asp-controller="Employees" asp-action="Payroll">Admin - Lönerapport</a>
@@ -31,6 +35,15 @@
                 if (message) {
             setTimeout(() => {
                 message.style.display = "none";
+            }, 10000);
+        }
+    </script>
+    <script>
+        const error = document.getElementById("tempError");
+
+                if (error) {
+            setTimeout(() => {
+                error.style.display = "none";
             }, 10000);
         }
     </script>

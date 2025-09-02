@@ -78,11 +78,10 @@ public class EmployeeServiceShould
         sut.Add(gunnar);
         sut.Add(anders);
 
+        Employee[] targetArray = [lisa, gunnar, anders];
         Employee[] result = sut.GetAll();
 
-        Assert.Contains(lisa, result);
-        Assert.Contains(gunnar, result);
-        Assert.Contains(anders, result);
+        Assert.All(targetArray, e => Assert.Contains(e, result));
     }
 
     [Fact]
@@ -127,13 +126,13 @@ public class EmployeeServiceShould
         Employee newEmployee = new Employee { Email = "simon@testmail.com", Name = "Simon" };
         sut.Add(newEmployee);
 
-        var beforeClockIn = DateTime.Now;
+        var beforeClockIn = DateTime.Now.AddMinutes(-1);
         sut.OnWork(newEmployee);
-        var afterClockIn = DateTime.Now;
+        var afterClockIn = DateTime.Now.AddMinutes(1);
 
-        var beforeClockOut = DateTime.Now;
+        var beforeClockOut = DateTime.Now.AddMinutes(-1);
         sut.OnWork(newEmployee);
-        var afterClockOut = DateTime.Now;
+        var afterClockOut = DateTime.Now.AddMinutes(1);
 
         var stamp = newEmployee.Stamps[0];
 

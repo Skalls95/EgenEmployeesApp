@@ -19,6 +19,11 @@ public class EmployeesController : Controller
     public IActionResult Details(int id)
     {
         var model = _employeeService.GetById(id);
+        if (model == null)
+        {
+            TempData["Error"] = $"Ingen anställd med Id {id} hittades!";
+            return RedirectToAction(nameof(Index));
+        }
         return View(model);
     }
 
