@@ -6,19 +6,24 @@ using Microsoft.AspNetCore.Mvc;
 namespace EmployeesApp.Web.Controllers;
 public class EmployeesController : Controller
 {
-    static EmployeeService _employeeService = new EmployeeService();
+    private readonly IEmployeeService _service;
+
+    public EmployeesController(IEmployeeService service)
+    {
+        _service = service;
+    }
 
     [Route("/")]
     public IActionResult Index()
     {
-        Employee[] model = _employeeService.GetAll();
+        Employee[] model = _service.GetAll();
         return View(model);
     }
 
     [HttpGet("/employee/{id}")]
     public IActionResult Details(int id)
     {
-        var model = _employeeService.GetById(id);
+        var model = _service.GetById(id);
         if (model == null)
         {
             TempData["Error"] = $"Ingen anställd med Id {id} hittades!";
@@ -40,7 +45,7 @@ public class EmployeesController : Controller
         if (!ModelState.IsValid)
             return View();
 
-        _employeeService.Add(employee);
+        _service.Add(employee);
 
         return RedirectToAction(nameof(Index));
     }
@@ -50,14 +55,14 @@ public class EmployeesController : Controller
     {
         if (id.HasValue)
         {
-            Employee? model = _employeeService.GetById(id.Value);
+            Employee? model = _service.GetById(id.Value);
             if (model == null)
             {
                 TempData["Error"] = $"Ingen anställd med Id {id} hittades!";
                 return RedirectToAction(nameof(Clock));
             }
 
-            bool startedWork = _employeeService.OnWork(model);
+            bool startedWork = _service.OnWork(model);
 
             TempData["Message"] = startedWork
                 ? $"{model.Name} stämplades in."
@@ -66,7 +71,7 @@ public class EmployeesController : Controller
             return RedirectToAction(nameof(Index));
         }
 
-        Employee[] modelList = _employeeService.GetAll()
+        Employee[] modelList =  _service.GetAll()
             .Where(e => e.OnWork == true)
             .ToArray();
 
@@ -76,7 +81,7 @@ public class EmployeesController : Controller
     [Route("/payroll")]
     public IActionResult Payroll()
     {
-        Employee[] employees = _employeeService.GetAll();
+        Employee[] employees = _service.GetAll();
         PayrollViewModel[] viewModel = employees
             .Select(e => new PayrollViewModel
             {

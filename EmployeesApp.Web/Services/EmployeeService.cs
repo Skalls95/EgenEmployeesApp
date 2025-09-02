@@ -2,7 +2,7 @@
 
 namespace EmployeesApp.Web.Services
 {
-    public class EmployeeService
+    public class EmployeeService : IEmployeeService
     {
         //public List<Employee> Employees = new List<Employee> {
         //new Employee{Id = 1, Name = "Jonas", Email = "Jonas@testmail.com"},
@@ -17,7 +17,6 @@ namespace EmployeesApp.Web.Services
             employee.Id = Employees.Count > 0 ? Employees.Max(p => p.Id) + 1 : 1;
 
             Employees.Add(employee);
-
         }
 
         public Employee[] GetAll()
@@ -45,9 +44,6 @@ namespace EmployeesApp.Web.Services
                 employee.OnWork = false;
                 return false;
             }
-
-
         }
-
     }
 }
