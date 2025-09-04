@@ -2,6 +2,9 @@
 using EmployeesApp.Web.Services;
 using EmployeesApp.Web.ViewModels;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using QRCoder;
+using System.Reflection;
 
 namespace EmployeesApp.Web.Controllers;
 public class EmployeesController : Controller
@@ -29,7 +32,25 @@ public class EmployeesController : Controller
             TempData["Error"] = $"Ingen anställd med Id {id} hittades!";
             return RedirectToAction(nameof(Index));
         }
-        return View(model);
+
+        var url = Url.Action(
+            nameof(Clock), 
+            "Employees", 
+            new { id }, 
+            Request.Scheme);
+
+        using var qrGenerator = new QRCodeGenerator();
+        using var qrCodeData = qrGenerator.CreateQrCode(url, QRCodeGenerator.ECCLevel.Q);
+        using var qrCode = new PngByteQRCode(qrCodeData);
+        byte[] qrCodeBytes = qrCode.GetGraphic(5);
+
+        var viewModel = new EmployeeDetailsViewModel
+        {
+            Employee = model,
+            QrCodeBase64 = $"data:image/png;base64,{Convert.ToBase64String(qrCodeBytes)}"
+        };
+
+        return View(viewModel);
     }
 
     [HttpGet("/create")]
